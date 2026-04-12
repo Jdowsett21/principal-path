@@ -11,7 +11,14 @@ type PillButtonProps = {
 
 export function PillButton({ title, onPress, variant = "primary" }: PillButtonProps) {
   return (
-    <Pressable onPress={onPress} style={[styles.button, variant === "secondary" && styles.secondary]}>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.button,
+        variant === "secondary" && styles.secondary,
+        pressed && styles.pressed
+      ]}
+    >
       <Text style={[styles.label, variant === "secondary" && styles.secondaryLabel]}>{title}</Text>
     </Pressable>
   );
@@ -28,6 +35,10 @@ const styles = StyleSheet.create({
   },
   secondary: {
     backgroundColor: palette.accentSoft
+  },
+  pressed: {
+    opacity: 0.88,
+    transform: [{ scale: 0.99 }]
   },
   label: {
     color: palette.surfaceRaised,

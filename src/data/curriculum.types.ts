@@ -32,9 +32,18 @@ export interface LessonSeed {
   format: 'audio-first' | 'mixed';
   hook: string;
   objective: string;
+  summary: string;
+  spokenIntro: string;
+  spokenWrap: string;
+  diagramCue: string;
   keyPoints: string[];
   walkPractice: string;
   reflectionPrompt: string;
+  steps: {
+    type: 'listen' | 'explain' | 'diagram' | 'practice' | 'reflect';
+    title: string;
+    detail: string;
+  }[];
 }
 
 export interface DailyChallengeSeed {

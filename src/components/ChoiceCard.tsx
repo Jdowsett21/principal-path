@@ -14,7 +14,10 @@ type ChoiceCardProps = {
 
 export function ChoiceCard({ title, description, selected = false, onPress }: ChoiceCardProps) {
   return (
-    <Pressable onPress={onPress} style={[styles.card, selected && styles.selected]}>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [styles.card, selected && styles.selected, pressed && styles.pressed]}
+    >
       <View style={styles.dotOuter}>{selected ? <View style={styles.dotInner} /> : null}</View>
       <View style={styles.copy}>
         <Label>{title}</Label>
@@ -38,6 +41,9 @@ const styles = StyleSheet.create({
   selected: {
     borderColor: palette.accent,
     backgroundColor: "#eef8f7"
+  },
+  pressed: {
+    opacity: 0.9
   },
   dotOuter: {
     width: 22,
