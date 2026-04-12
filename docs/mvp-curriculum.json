@@ -1,0 +1,178 @@
+{
+  "version": 1,
+  "appName": "Principal Path",
+  "tracks": [
+    {
+      "id": "architecture",
+      "title": "Architecture and System Design",
+      "priority": 1,
+      "modules": [
+        {
+          "id": "system-boundaries",
+          "title": "Service Boundaries and Modularity",
+          "outcomes": [
+            "Choose reasonable service boundaries",
+            "Explain monolith vs microservices trade-offs",
+            "Identify coupling risks early"
+          ]
+        },
+        {
+          "id": "design-tradeoffs",
+          "title": "Design Trade-Offs",
+          "outcomes": [
+            "Compare throughput, latency, cost, and complexity",
+            "Defend a design under business constraints"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "data",
+      "title": "Databases and Data Systems",
+      "priority": 1,
+      "modules": [
+        {
+          "id": "postgres-core",
+          "title": "Postgres Fundamentals",
+          "outcomes": [
+            "Understand indexes and query plans",
+            "Reason about transactions and isolation",
+            "Spot common schema mistakes"
+          ]
+        },
+        {
+          "id": "data-scale",
+          "title": "Scaling Data Access",
+          "outcomes": [
+            "Choose between caching, replicas, and partitioning",
+            "Understand consistency implications"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reliability",
+      "title": "Reliability and Operations",
+      "priority": 1,
+      "modules": [
+        {
+          "id": "observability",
+          "title": "Observability",
+          "outcomes": [
+            "Use logs, metrics, and traces correctly",
+            "Define useful service health indicators"
+          ]
+        },
+        {
+          "id": "incident-response",
+          "title": "Incident Response",
+          "outcomes": [
+            "Triage incidents calmly",
+            "Reduce blast radius",
+            "Write useful postmortems"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "distributed-systems",
+      "title": "Distributed Systems",
+      "priority": 2,
+      "modules": [
+        {
+          "id": "failure-modes",
+          "title": "Failure Modes",
+          "outcomes": [
+            "Understand retries, timeouts, and idempotency",
+            "Recognize network assumptions that break systems"
+          ]
+        },
+        {
+          "id": "consistency",
+          "title": "Consistency and Coordination",
+          "outcomes": [
+            "Explain CAP-style trade-offs in practical terms",
+            "Choose acceptable consistency for a product need"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "leadership",
+      "title": "Leadership and Technical Judgment",
+      "priority": 2,
+      "modules": [
+        {
+          "id": "stakeholder-tradeoffs",
+          "title": "Stakeholder Trade-Offs",
+          "outcomes": [
+            "Communicate risk clearly",
+            "Push back without sounding obstructive"
+          ]
+        },
+        {
+          "id": "ai-code-review",
+          "title": "Reviewing AI-Generated Code",
+          "outcomes": [
+            "Inspect correctness beyond surface plausibility",
+            "Catch hidden operational and maintenance risk"
+          ]
+        }
+      ]
+    }
+  ],
+  "challengeTypes": [
+    {
+      "id": "quiz",
+      "title": "Quick Quiz",
+      "description": "Fast recall and concept checks for walking sessions."
+    },
+    {
+      "id": "tradeoff",
+      "title": "Trade-Off Challenge",
+      "description": "Pick an approach, explain why, then review consequences."
+    },
+    {
+      "id": "incident",
+      "title": "Incident Drill",
+      "description": "Respond to an outage, latency spike, or data issue."
+    },
+    {
+      "id": "system_design",
+      "title": "System Design Rep",
+      "description": "Design a system, then adapt as constraints change."
+    }
+  ],
+  "starterWeek": [
+    {
+      "day": 1,
+      "focus": "Architecture",
+      "lesson": "Monolith vs microservices",
+      "challenge": "Choose an architecture for a small but fast-growing product"
+    },
+    {
+      "day": 2,
+      "focus": "Data",
+      "lesson": "Indexes and query plans",
+      "challenge": "Fix a slow query for a hot production path"
+    },
+    {
+      "day": 3,
+      "focus": "Reliability",
+      "lesson": "Logs, metrics, traces",
+      "challenge": "Diagnose a latency regression after deploy"
+    },
+    {
+      "day": 4,
+      "focus": "Distributed Systems",
+      "lesson": "Retries and idempotency",
+      "challenge": "Prevent duplicate payment processing"
+    },
+    {
+      "day": 5,
+      "focus": "Leadership",
+      "lesson": "Explaining technical risk",
+      "challenge": "Respond to a rushed deadline with production risk"
+    }
+  ]
+}
