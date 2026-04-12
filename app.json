@@ -17,6 +17,11 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.jamesdowsettcooper.principalpath"
     },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./public/icon.png"
+    },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#f6f1e8"
