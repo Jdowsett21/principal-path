@@ -219,5 +219,68 @@ export const dailyChallenges: DailyChallengeSeed[] = [
       'Prefer the simplest shape that solves the real need'
     ],
     whyItMatters: 'Senior cloud engineers know when to pay for convenience and when to keep the architecture lean.'
+  },
+  {
+    id: 'daily-012',
+    trackId: 'cloud-platform',
+    type: 'tradeoff',
+    title: 'Batch or Stream for This Pipeline?',
+    durationMinutes: 6,
+    scenario: 'Product wants near-real-time dashboards, but the actual user decision cadence is hourly and the data model is still evolving.',
+    prompt: 'Do you start with a stream processor or a simpler batch pipeline?',
+    choices: [
+      'Start with batch and revisit streaming when freshness truly matters',
+      'Start with streaming because real time is always better',
+      'Skip the pipeline and query the production database directly forever'
+    ],
+    correctChoiceIndex: 0,
+    idealSignals: [
+      'Match the architecture to the true freshness requirement',
+      'Avoid premature streaming complexity',
+      'Protect the transactional system from analytical misuse'
+    ],
+    whyItMatters: 'Platform judgment often means resisting exciting systems until the problem deserves them.'
+  },
+  {
+    id: 'daily-013',
+    trackId: 'cloud-platform',
+    type: 'quiz',
+    title: 'What Makes a Queue Consumer Safe?',
+    durationMinutes: 5,
+    scenario: 'A queue may deliver the same message more than once during retries.',
+    prompt: 'Which property matters most for keeping the side effect safe?',
+    choices: [
+      'Idempotency',
+      'Bigger worker instances',
+      'More metrics dashboards'
+    ],
+    correctChoiceIndex: 0,
+    idealSignals: [
+      'Recognize duplicate delivery as a normal distributed-systems condition',
+      'Tie queue safety to side-effect design',
+      'Separate reliability from brute-force scaling'
+    ],
+    whyItMatters: 'A lot of event-driven failures are really consumer contract failures.'
+  },
+  {
+    id: 'daily-014',
+    trackId: 'cloud-platform',
+    type: 'tradeoff',
+    title: 'Managed ML or Custom Stack?',
+    durationMinutes: 6,
+    scenario: 'A team is just starting to train and serve models, but one engineer wants to build a custom platform immediately.',
+    prompt: 'What is the better default move?',
+    choices: [
+      'Use a managed ML service first and specialize later if the workflow demands it',
+      'Build the custom platform now so you have maximum flexibility',
+      'Avoid evaluation and focus only on faster training'
+    ],
+    correctChoiceIndex: 0,
+    idealSignals: [
+      'Optimize for speed of learning before platform ownership',
+      'Use managed services until friction becomes real',
+      'Keep evaluation and inference needs in view'
+    ],
+    whyItMatters: 'Principal-level thinking weighs control against team maturity and delivery speed.'
   }
 ];

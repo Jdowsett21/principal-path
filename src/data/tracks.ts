@@ -168,6 +168,24 @@ export const tracks: TrackSeed[] = [
           'Reason about S3, CloudFront OAC, and Aurora placement',
           'Explain how to reduce blast radius in staging and production'
         ]
+      },
+      {
+        id: 'data-pipelines',
+        title: 'Data Pipelines and Event Flows',
+        outcomes: [
+          'Choose between batch, queue-based, and streaming pipeline designs',
+          'Understand ingestion, transformation, and warehouse trade-offs',
+          'Reason about retries, backpressure, and data correctness'
+        ]
+      },
+      {
+        id: 'ml-systems',
+        title: 'ML and AI Platform Systems',
+        outcomes: [
+          'Understand training, inference, feature, and evaluation workflows',
+          'Compare managed ML services against custom platform builds',
+          'Reason about latency, cost, and model operations in production'
+        ]
       }
     ]
   }

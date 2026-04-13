@@ -90,5 +90,41 @@ export const buildMissions: BuildMissionSeed[] = [
       "You can explain the cost impact in plain terms.",
       "You know what would change the decision later."
     ]
+  },
+  {
+    id: "mission-006",
+    title: "Design an event-driven data pipeline",
+    category: "Data Platform",
+    durationMinutes: 45,
+    outcome: "A concrete design for moving product events into storage, transformation, and analytics without hurting the production path.",
+    reward: "You get practice with a principal-level system design problem that shows up constantly in modern backend and platform work.",
+    steps: [
+      { title: "Choose the pipeline shape", detail: "Decide between batch, queue-based, and streaming for the use case." },
+      { title: "Protect the source systems", detail: "Separate the app transaction path from analytics ingestion." },
+      { title: "Define correctness", detail: "Describe retries, deduplication, and warehouse freshness expectations." }
+    ],
+    successSignals: [
+      "You can explain why the chosen shape fits the freshness requirement.",
+      "You have a clear ingestion and storage path.",
+      "You know where correctness could break."
+    ]
+  },
+  {
+    id: "mission-007",
+    title: "Design an ML inference platform for a small team",
+    category: "ML Systems",
+    durationMinutes: 50,
+    outcome: "A practical architecture for model serving, evaluation, and monitoring that does not overbuild the platform too early.",
+    reward: "You practice the exact blend of ML, backend, and platform judgment that becomes more valuable as coding gets automated.",
+    steps: [
+      { title: "Pick managed versus custom", detail: "Choose which layers the team should own and which should stay managed." },
+      { title: "Define the serving path", detail: "Map request flow, latency targets, fallback behavior, and observability." },
+      { title: "Close the loop", detail: "Add evaluation, feedback, and drift monitoring to the design." }
+    ],
+    successSignals: [
+      "The architecture matches team maturity.",
+      "Inference behavior is observable and measurable.",
+      "You can explain when the platform should evolve."
+    ]
   }
 ];

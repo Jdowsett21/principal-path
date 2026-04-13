@@ -56,5 +56,33 @@ export const frontierBriefs: FrontierBriefSeed[] = [
       "Can retrieval solve this with lower risk?",
       "What data do you actually have?"
     ]
+  },
+  {
+    id: "frontier-005",
+    title: "Lakehouse and modern data stack trade-offs",
+    category: "Data Platform",
+    summary: "Choose the lightest analytical stack that supports ingestion, transformation, governance, and useful questions.",
+    whyItMatters: "A lot of teams overbuild their data platform before they even know what decisions the business needs to make from it.",
+    status: "watch",
+    effortMinutes: 10,
+    keyQuestions: [
+      "What analytical questions actually matter first?",
+      "How fresh does the data truly need to be?",
+      "What part of the stack creates the most operational drag?"
+    ]
+  },
+  {
+    id: "frontier-006",
+    title: "Managed ML platforms versus custom inference stacks",
+    category: "ML Systems",
+    summary: "Balance speed, control, latency, and evaluation needs when deciding how much ML infrastructure to own.",
+    whyItMatters: "Teams often either overbuild ML infrastructure too early or underinvest in the serving and evaluation loop that production systems actually need.",
+    status: "experiment",
+    effortMinutes: 11,
+    keyQuestions: [
+      "Which parts of the ML workflow are repetitive enough to justify platform investment?",
+      "What latency and observability guarantees do users need?",
+      "Where would managed services start to create real friction?"
+    ]
   }
 ];

@@ -645,5 +645,205 @@ export const lessons: LessonSeed[] = [
         detail: 'Identify one failure mode you would still not see clearly.'
       }
     ]
+  },
+  {
+    id: 'cloud-08',
+    trackId: 'cloud-platform',
+    title: 'Batch, Queue, or Stream?',
+    durationMinutes: 10,
+    level: 'senior',
+    format: 'audio-first',
+    hook: 'Most pipeline design mistakes come from choosing the wrong processing shape too early.',
+    objective: 'Learn when to use batch jobs, queue-driven workers, or true streaming systems.',
+    summary: 'A lesson on picking the simplest data movement shape that matches the business need.',
+    spokenIntro:
+      'Not every data problem needs Kafka, and not every workflow should wait for a nightly batch. The right question is how fresh the data must be, how much load you expect, and what failure model you can tolerate.',
+    spokenWrap:
+      'Choose the lightest pipeline shape that meets the freshness and reliability requirement.',
+    diagramCue: 'Draw three columns labeled batch, queue, and stream, then place a real use case under each.',
+    keyPoints: [
+      'Batch is often the simplest answer when freshness is measured in hours.',
+      'Queues are strong when work is event-driven and can be processed asynchronously.',
+      'Streaming adds power but also operational and debugging complexity.'
+    ],
+    walkPractice: 'Take one product use case and explain why you would choose batch, queue, or streaming for it.',
+    reflectionPrompt: 'What freshness requirement is actually real, and which one is assumed?',
+    steps: [
+      {
+        type: 'listen',
+        title: 'Name the freshness target',
+        detail: 'Decide whether the system needs seconds, minutes, or hours of freshness.'
+      },
+      {
+        type: 'diagram',
+        title: 'Map the pipeline shape',
+        detail: 'Sketch the data path for each of the three processing modes.'
+      },
+      {
+        type: 'practice',
+        title: 'Choose the simplest fit',
+        detail: 'Defend one shape and explain why the others are too heavy or too weak.'
+      }
+    ]
+  },
+  {
+    id: 'cloud-09',
+    trackId: 'cloud-platform',
+    title: 'Queues, Retries, and Poison Messages',
+    durationMinutes: 9,
+    level: 'senior',
+    format: 'audio-first',
+    hook: 'Asynchronous systems fail more often through retries than through the original error.',
+    objective: 'Understand queue semantics, retry behavior, dead-letter handling, and idempotency.',
+    summary: 'A lesson on making event-driven systems stable instead of noisy.',
+    spokenIntro:
+      'Queues make systems more resilient only when retry behavior is safe. If processing is not idempotent, retries can amplify bad outcomes instead of protecting the system.',
+    spokenWrap:
+      'The queue is not the safety guarantee. The processing contract is.',
+    diagramCue: 'Draw producer, queue, worker, retry path, and dead-letter queue. Mark where duplicate handling matters.',
+    keyPoints: [
+      'Retries need idempotent work or deduplication.',
+      'Dead-letter queues are for visibility and recovery, not for forgetting bad events.',
+      'Backpressure and retry storms are architecture problems, not just worker problems.'
+    ],
+    walkPractice: 'Explain how you would process a payment or webhook queue safely under retries.',
+    reflectionPrompt: 'Where would duplicate processing be harmless, and where would it be damaging?',
+    steps: [
+      {
+        type: 'listen',
+        title: 'Trace the failure path',
+        detail: 'Name what happens when one event fails once, twice, and repeatedly.'
+      },
+      {
+        type: 'diagram',
+        title: 'Draw the retry loop',
+        detail: 'Show the worker, the retry path, and the dead-letter path.'
+      },
+      {
+        type: 'practice',
+        title: 'Protect the side effect',
+        detail: 'Say how you would make the consumer safe under duplicate delivery.'
+      }
+    ]
+  },
+  {
+    id: 'cloud-10',
+    trackId: 'cloud-platform',
+    title: 'Data Lakes, Warehouses, and Analytical Paths',
+    durationMinutes: 10,
+    level: 'owner',
+    format: 'mixed',
+    hook: 'Analytics systems are mostly about choosing where truth should live and how expensive it should be to query.',
+    objective: 'Build intuition for operational databases versus warehouses and where transformation should happen.',
+    summary: 'A lesson on moving from app data to usable analytical systems.',
+    spokenIntro:
+      'Production databases are optimized for application behavior. Analytical systems are optimized for questions. Good platform design keeps those goals from fighting each other.',
+    spokenWrap:
+      'Do not ask the transactional system to become the warehouse unless you enjoy paying twice for the same mistake.',
+    diagramCue: 'Draw app database, ingestion path, storage layer, transformation layer, and warehouse query layer.',
+    keyPoints: [
+      'Operational databases and analytical warehouses solve different problems.',
+      'Transformation can happen before storage, after storage, or in the warehouse itself.',
+      'Freshness, cost, and modeling discipline define the right analytical path.'
+    ],
+    walkPractice: 'Explain how you would move product events from the app into a reporting system without hurting the app database.',
+    reflectionPrompt: 'Where should the source of analytical truth live in a system like this?',
+    steps: [
+      {
+        type: 'listen',
+        title: 'Separate the workloads',
+        detail: 'Name what belongs in the transactional path and what belongs in analytics.'
+      },
+      {
+        type: 'diagram',
+        title: 'Sketch the pipeline',
+        detail: 'Map operational storage to analytical storage through an ingestion step.'
+      },
+      {
+        type: 'practice',
+        title: 'Choose the transform point',
+        detail: 'Say where you would clean and shape the data and why.'
+      }
+    ]
+  },
+  {
+    id: 'cloud-11',
+    trackId: 'cloud-platform',
+    title: 'Managed ML Service or Custom Platform?',
+    durationMinutes: 10,
+    level: 'principal',
+    format: 'audio-first',
+    hook: 'Most ML platform decisions are build-versus-buy decisions wearing technical clothing.',
+    objective: 'Reason about when managed services like SageMaker are enough and when a custom ML platform is justified.',
+    summary: 'A lesson on training, inference, experimentation, and operational ownership in ML systems.',
+    spokenIntro:
+      'A lot of teams overbuild ML infrastructure before they have enough model maturity to justify it. The first decision is not what is possible. It is what level of control the team actually needs.',
+    spokenWrap:
+      'Use managed ML until control, cost, or workflow friction creates a strong reason to own more of the platform.',
+    diagramCue: 'Draw data prep, training, model registry, deployment, inference, and evaluation. Mark which layers are managed versus custom.',
+    keyPoints: [
+      'Managed ML services reduce setup cost and speed up experimentation.',
+      'Custom platforms become attractive when workflows are repeated, specialized, or constrained.',
+      'Inference latency, evaluation, and model lifecycle often matter more than training glamour.'
+    ],
+    walkPractice: 'Explain when you would stay on a managed ML stack and when you would start carving out custom pieces.',
+    reflectionPrompt: 'Which part of an ML system would create enough friction to justify owning more platform?',
+    steps: [
+      {
+        type: 'listen',
+        title: 'Define the workflow',
+        detail: 'Name the actual training and inference needs before talking tooling.'
+      },
+      {
+        type: 'diagram',
+        title: 'Split managed from custom',
+        detail: 'Show which layers could stay managed and which might need specialization.'
+      },
+      {
+        type: 'practice',
+        title: 'Make the platform call',
+        detail: 'Defend managed or custom based on control, speed, and team maturity.'
+      }
+    ]
+  },
+  {
+    id: 'cloud-12',
+    trackId: 'cloud-platform',
+    title: 'Feature Stores, Evaluation, and ML Operations',
+    durationMinutes: 10,
+    level: 'principal',
+    format: 'mixed',
+    hook: 'ML systems break less often in the model than in the data and evaluation loop around it.',
+    objective: 'Understand why feature consistency, offline evaluation, and production feedback loops matter.',
+    summary: 'A lesson on turning ML from a demo into a system that can be trusted over time.',
+    spokenIntro:
+      'The most expensive ML mistake is believing the model problem is solved once training finishes. In practice, the hard work is keeping features, evaluation, and live behavior aligned.',
+    spokenWrap:
+      'A model without evaluation and feedback is just a temporary success waiting to expire.',
+    diagramCue: 'Draw offline data, feature generation, training, evaluation, serving, and feedback back into the system.',
+    keyPoints: [
+      'Feature consistency between training and serving is a core reliability problem.',
+      'Offline evaluation should connect to real business outcomes, not only model metrics.',
+      'Production monitoring needs to catch drift, latency, and degraded user impact.'
+    ],
+    walkPractice: 'Explain how you would know a model is helping in production rather than merely scoring well offline.',
+    reflectionPrompt: 'What would I need to monitor before trusting an ML system with user-facing decisions?',
+    steps: [
+      {
+        type: 'listen',
+        title: 'Name the reliability loop',
+        detail: 'Start from data and trace the loop through training, serving, and feedback.'
+      },
+      {
+        type: 'diagram',
+        title: 'Show training-serving alignment',
+        detail: 'Mark where feature drift or evaluation gaps could appear.'
+      },
+      {
+        type: 'practice',
+        title: 'Define success in production',
+        detail: 'State what metric would prove the system is actually helping users or the business.'
+      }
+    ]
   }
 ];
