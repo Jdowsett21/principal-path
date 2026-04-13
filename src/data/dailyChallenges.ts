@@ -198,5 +198,26 @@ export const dailyChallenges: DailyChallengeSeed[] = [
       'Look for silent configuration or resource issues before assuming app logic is broken'
     ],
     whyItMatters: 'Deployment failures are often configuration failures wearing an application-shaped mask.'
+  },
+  {
+    id: 'daily-011',
+    trackId: 'cloud-platform',
+    type: 'tradeoff',
+    title: 'NAT Gateway or No NAT?',
+    durationMinutes: 6,
+    scenario: 'A private ECS workload needs limited outbound internet access, but you want to avoid unnecessary cost and complexity.',
+    prompt: 'Should you add a NAT gateway now or wait until there is a concrete need?',
+    choices: [
+      'Wait until the need is proven and the cost is justified',
+      'Add it by default because private systems need it',
+      'Skip the discussion and expose everything publicly'
+    ],
+    correctChoiceIndex: 0,
+    idealSignals: [
+      'Treat NAT as a trade-off, not a default',
+      'Balance outbound access against recurring cost',
+      'Prefer the simplest shape that solves the real need'
+    ],
+    whyItMatters: 'Senior cloud engineers know when to pay for convenience and when to keep the architecture lean.'
   }
 ];

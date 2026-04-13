@@ -515,5 +515,135 @@ export const lessons: LessonSeed[] = [
         detail: 'Practice a one-sentence rule for who can read what.'
       }
     ]
+  },
+  {
+    id: 'cloud-05',
+    trackId: 'cloud-platform',
+    title: 'Why We Skip NAT Gateway Until It Is Worth It',
+    durationMinutes: 9,
+    level: 'senior',
+    format: 'audio-first',
+    hook: 'NAT gateways are a cost trade-off, not a default badge of maturity.',
+    objective: 'Understand when a NAT gateway is useful, when it is overkill, and what alternative shapes exist.',
+    summary: 'A lesson about egress design, operational simplicity, and cost discipline.',
+    spokenIntro:
+      'A NAT gateway solves a real problem: private workloads reaching the internet without being exposed. But that convenience comes with a recurring cost and another moving part to operate.',
+    spokenWrap:
+      'Skipping NAT was not a shortcut. It was a decision to avoid paying for an abstraction before the workload needed it.',
+    diagramCue: 'Draw private compute, an internet path, and the missing NAT hop. Mark the cost and complexity that would be added.',
+    keyPoints: [
+      'A NAT gateway is useful when private workloads need outbound internet access.',
+      'It adds recurring cost and another component to monitor.',
+      'You should justify it with a concrete need, not with habit.'
+    ],
+    walkPractice: 'Explain when you would add NAT later and what evidence would make it worth the spend.',
+    reflectionPrompt: 'What egress need am I actually solving for, and is there a cheaper shape that still works?',
+    steps: [
+      {
+        type: 'listen',
+        title: 'Name the problem',
+        detail: 'State what outbound access is needed for and how often.'
+      },
+      {
+        type: 'explain',
+        title: 'Price the convenience',
+        detail: 'Say what cost and complexity the NAT adds.'
+      },
+      {
+        type: 'diagram',
+        title: 'Show the missing hop',
+        detail: 'Draw the path the traffic would take if NAT were introduced.'
+      },
+      {
+        type: 'practice',
+        title: 'Defend the omission',
+        detail: 'Practice explaining why not adding NAT was a deliberate architectural choice.'
+      }
+    ]
+  },
+  {
+    id: 'cloud-06',
+    trackId: 'cloud-platform',
+    title: 'CloudFront, S3, and the Edge',
+    durationMinutes: 9,
+    level: 'owner',
+    format: 'audio-first',
+    hook: 'The edge should absorb the boring traffic so the app can focus on the hard parts.',
+    objective: 'Learn how CloudFront and S3 separate static delivery from dynamic app behavior.',
+    summary: 'A lesson on edge caching, asset hosting, and origin protection.',
+    spokenIntro:
+      'If your application serves static assets, the edge can take work off the app path and make delivery faster and cheaper. The important part is knowing what should be cached and what should stay dynamic.',
+    spokenWrap:
+      'Use the edge to reduce load and shrink exposure, not to hide unclear architecture.',
+    diagramCue: 'Draw browser, CloudFront, S3, and the app origin. Mark which requests should stop at the edge.',
+    keyPoints: [
+      'CloudFront reduces origin load and improves latency.',
+      'S3 is a strong fit for immutable static assets.',
+      'Origin access control helps keep the bucket from being directly public.'
+    ],
+    walkPractice: 'Explain why the asset bucket should not be directly exposed when CloudFront can front it.',
+    reflectionPrompt: 'Which requests in my stack are static enough to move to the edge?',
+    steps: [
+      {
+        type: 'listen',
+        title: 'Identify static work',
+        detail: 'List the requests that do not need the application server.'
+      },
+      {
+        type: 'diagram',
+        title: 'Draw the edge path',
+        detail: 'Show browser to CloudFront to S3 and where the app origin still matters.'
+      },
+      {
+        type: 'practice',
+        title: 'Explain the protection',
+        detail: 'Say how origin access control reduces direct exposure.'
+      }
+    ]
+  },
+  {
+    id: 'cloud-07',
+    trackId: 'cloud-platform',
+    title: 'Observability for Cloud Stacks',
+    durationMinutes: 10,
+    level: 'principal',
+    format: 'mixed',
+    hook: 'If you cannot see it, you cannot safely change it.',
+    objective: 'Build a practical view of logs, metrics, health checks, and alerts across the AWS stack.',
+    summary: 'A lesson on making staging useful as a signal source instead of just a place to deploy.',
+    spokenIntro:
+      'A mature cloud stack is observable at the edges and inside the runtime. That means logs for details, metrics for trends, and health checks for release safety.',
+    spokenWrap:
+      'Observability is what turns deployment from hope into evidence.',
+    diagramCue: 'Draw the system and attach one logging signal, one metric, and one health check to each important layer.',
+    keyPoints: [
+      'Health checks tell you if the service is alive enough to receive traffic.',
+      'Logs explain why something happened.',
+      'Metrics tell you when the shape of the system is changing.'
+    ],
+    walkPractice: 'Name the three signals you would want before trusting a new deployment.',
+    reflectionPrompt: 'What would I need to observe before I would call a change safe?',
+    steps: [
+      {
+        type: 'listen',
+        title: 'Pick the signals',
+        detail: 'Choose one log, one metric, and one health check for the system.'
+      },
+      {
+        type: 'explain',
+        title: 'Connect the layers',
+        detail: 'Describe how app, load balancer, and database signals fit together.'
+      },
+      {
+        type: 'practice',
+        title: 'Define safe to ship',
+        detail: 'Say what would need to be true before you would increase traffic.'
+      },
+      {
+        type: 'reflect',
+        title: 'Spot blind spots',
+        detail: 'Identify one failure mode you would still not see clearly.'
+      }
+    ]
   }
 ];

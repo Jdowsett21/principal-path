@@ -72,5 +72,23 @@ export const buildMissions: BuildMissionSeed[] = [
       "You know what is public, private, and secret.",
       "You have one concrete hardening change in mind."
     ]
+  },
+  {
+    id: "mission-005",
+    title: "Design the egress strategy for a private ECS service",
+    category: "Cloud Architecture",
+    durationMinutes: 40,
+    outcome: "A clear note describing whether the service needs a NAT gateway, a simpler outbound path, or no outbound access at all.",
+    reward: "You practice one of the most common cloud architecture judgment calls: paying for convenience only when it earns its keep.",
+    steps: [
+      { title: "List outbound needs", detail: "Identify what the service must reach on the internet and why." },
+      { title: "Compare options", detail: "Write the cost, risk, and complexity of NAT versus alternatives." },
+      { title: "Make the call", detail: "Choose the smallest egress shape that still supports the workload." }
+    ],
+    successSignals: [
+      "You can justify the choice without hand-waving.",
+      "You can explain the cost impact in plain terms.",
+      "You know what would change the decision later."
+    ]
   }
 ];
