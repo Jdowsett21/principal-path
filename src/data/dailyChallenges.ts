@@ -162,5 +162,41 @@ export const dailyChallenges: DailyChallengeSeed[] = [
       'Connect alerting to actionable response'
     ],
     whyItMatters: 'Operational systems should help humans act, not punish them for existing.'
+  },
+  {
+    id: 'daily-009',
+    trackId: 'cloud-platform',
+    type: 'tradeoff',
+    title: 'Public or Private?',
+    durationMinutes: 6,
+    scenario: 'A staging app needs to receive traffic from the internet, but the database should remain hidden.',
+    prompt: 'Which part belongs in a public subnet and which part should stay private?',
+    choices: [
+      'Only the load balancer is public; the app tasks and database stay private',
+      'Everything is public because it is easier to debug',
+      'The database should be public so the app can connect to it'
+    ],
+    correctChoiceIndex: 0,
+    idealSignals: [
+      'Recognize the edge versus internal boundary',
+      'Keep the blast radius small',
+      'Separate exposure from reachability'
+    ],
+    whyItMatters: 'A senior cloud engineer protects the sensitive core while keeping the public edge simple.'
+  },
+  {
+    id: 'daily-010',
+    trackId: 'cloud-platform',
+    type: 'incident',
+    title: 'Fargate Task Keeps Restarting',
+    durationMinutes: 7,
+    scenario: 'A new ECS task starts, passes one health check, then repeatedly restarts under load.',
+    prompt: 'What do you check first: task logs, ALB health checks, or image/build changes?',
+    idealSignals: [
+      'Check the real health signal and container logs together',
+      'Compare the new task definition to the previous version',
+      'Look for silent configuration or resource issues before assuming app logic is broken'
+    ],
+    whyItMatters: 'Deployment failures are often configuration failures wearing an application-shaped mask.'
   }
 ];

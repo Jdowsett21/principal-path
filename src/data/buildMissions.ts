@@ -54,5 +54,23 @@ export const buildMissions: BuildMissionSeed[] = [
       "The workflow is measurable.",
       "The next iteration is obvious."
     ]
+  },
+  {
+    id: "mission-004",
+    title: "Refactor a staging AWS stack",
+    category: "Cloud Architecture",
+    durationMinutes: 50,
+    outcome: "A clearer AWS layout with a smaller blast radius and a more legible deployment path.",
+    reward: "You practice the exact infrastructure judgment that senior and principal engineers are expected to own.",
+    steps: [
+      { title: "Trace the request path", detail: "Document CDN, ALB, ECS, and Aurora in one flow." },
+      { title: "Reduce exposure", detail: "Identify one component that should move behind a boundary." },
+      { title: "Lock down config", detail: "Map a secret or runtime value to a narrower access path." }
+    ],
+    successSignals: [
+      "You can explain the staging topology in plain language.",
+      "You know what is public, private, and secret.",
+      "You have one concrete hardening change in mind."
+    ]
   }
 ];

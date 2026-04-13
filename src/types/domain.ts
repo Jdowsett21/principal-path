@@ -11,7 +11,8 @@ export type SkillDomain =
   | "architecture_and_design"
   | "security_and_risk"
   | "product_and_business_judgment"
-  | "leadership_and_communication";
+  | "leadership_and_communication"
+  | "cloud_architecture_and_aws";
 
 export type SkillLevel = 1 | 2 | 3 | 4 | 5;
 
@@ -30,4 +31,3 @@ export type RecommendationType =
   | "session_followup";
 
 export type Difficulty = "intro" | "intermediate" | "advanced" | "expert";
-

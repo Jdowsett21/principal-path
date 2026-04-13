@@ -3,7 +3,8 @@ export type TrackId =
   | 'data'
   | 'reliability'
   | 'distributed-systems'
-  | 'leadership';
+  | 'leadership'
+  | 'cloud-platform';
 
 export type ChallengeType = 'quiz' | 'tradeoff' | 'incident' | 'system_design';
 

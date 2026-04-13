@@ -11,7 +11,8 @@ export const trackToDomainMap: Record<string, SkillDomain> = {
   data: "data_and_databases",
   reliability: "reliability_and_operations",
   "distributed-systems": "distributed_systems",
-  leadership: "leadership_and_communication"
+  leadership: "leadership_and_communication",
+  "cloud-platform": "cloud_architecture_and_aws"
 };
 
 const challengeDifficultyMap: Record<string, ChallengeSubmission["difficulty"]> = {
@@ -37,7 +38,8 @@ function createDemoProfile(): UserProfile {
     focusDomains: [
       "architecture_and_design",
       "data_and_databases",
-      "reliability_and_operations"
+      "reliability_and_operations",
+      "cloud_architecture_and_aws"
     ]
   };
 }
@@ -88,6 +90,15 @@ function createDemoSkills(): UserSkillState[] {
       xp: 390,
       lastPracticedAt: "2026-04-09T10:30:00.000Z",
       weaknessScore: 34
+    },
+    {
+      skillId: "skill-cloud",
+      domain: "cloud_architecture_and_aws",
+      level: 3,
+      mastery: 58,
+      xp: 360,
+      lastPracticedAt: "2026-04-06T10:30:00.000Z",
+      weaknessScore: 42
     }
   ];
 }

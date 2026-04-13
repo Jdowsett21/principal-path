@@ -132,5 +132,38 @@ export const weeklySimulations: WeeklySimulationSeed[] = [
         whatGreatLooksLike: 'Matches the plan to team capacity and product urgency.'
       }
     ]
+  },
+  {
+    id: 'week-05',
+    week: 5,
+    title: 'Harden a Staging AWS Stack',
+    primaryTrackId: 'cloud-platform',
+    scenario: 'You inherited a staging AWS stack with ECS Fargate, Aurora, CloudFront, and SSM-managed secrets. It works, but the blast radius is larger than it should be.',
+    constraints: [
+      'You cannot redesign the whole stack',
+      'The app still needs to ship this week',
+      'You need to improve safety without increasing team burden',
+      'Any change must be reversible'
+    ],
+    tasks: [
+      'Identify the highest-risk exposure in the current setup',
+      'Propose the smallest boundary change that improves safety',
+      'Describe how you would validate the change',
+      'Name the rollback path if it misbehaves'
+    ],
+    scoringRubric: [
+      {
+        dimension: 'Network judgment',
+        whatGreatLooksLike: 'Separates edge traffic from internal resources without overcomplicating the design.'
+      },
+      {
+        dimension: 'Secret handling',
+        whatGreatLooksLike: 'Keeps runtime config and secrets under narrow, explicit control.'
+      },
+      {
+        dimension: 'Release safety',
+        whatGreatLooksLike: 'Defines a practical verification and rollback plan.'
+      }
+    ]
   }
 ];

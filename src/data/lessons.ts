@@ -345,5 +345,175 @@ export const lessons: LessonSeed[] = [
         detail: 'Say why you would not overbuild the solution.'
       }
     ]
+  },
+  {
+    id: 'cloud-01',
+    trackId: 'cloud-platform',
+    title: 'Reading a Staging Stack Like an Architect',
+    durationMinutes: 10,
+    level: 'owner',
+    format: 'audio-first',
+    hook: 'A staging stack is a map of what the team thinks matters right now.',
+    objective: 'Learn to read a real AWS stack as a set of trade-offs rather than a pile of services.',
+    summary: 'A walk lesson that turns a CloudFormation stack into architecture judgment.',
+    spokenIntro:
+      'Today we are looking at cloud infrastructure as a design story. Every service in the stack exists to solve a specific problem, and every choice creates a new constraint.',
+    spokenWrap:
+      'The question is not whether the stack is technically valid. The question is whether it is safe, understandable, and easy to change.',
+    diagramCue: 'Sketch the request path from user to CDN to load balancer to service to database.',
+    keyPoints: [
+      'CloudFormation is infrastructure expressed as code.',
+      'The shape of the stack reveals the team’s assumptions about reliability and change.',
+      'A staging environment should be close enough to catch real issues but cheap enough to evolve.'
+    ],
+    walkPractice: 'Explain what the stack tells you about where this team has chosen simplicity and where it has chosen control.',
+    reflectionPrompt: 'Which part of this infrastructure would be the first thing to simplify if the system were being rebuilt today?',
+    steps: [
+      {
+        type: 'listen',
+        title: 'Read the request path',
+        detail: 'Follow the user request from edge to app to database.'
+      },
+      {
+        type: 'diagram',
+        title: 'Map the stack',
+        detail: 'Draw CDN, load balancer, ECS, S3, and Aurora in a single path.'
+      },
+      {
+        type: 'explain',
+        title: 'Call out the trade-offs',
+        detail: 'Describe what each service buys you and what operational cost it introduces.'
+      },
+      {
+        type: 'reflect',
+        title: 'Name the first simplification',
+        detail: 'Pick one part you would reduce if you were redesigning from scratch.'
+      }
+    ]
+  },
+  {
+    id: 'cloud-02',
+    trackId: 'cloud-platform',
+    title: 'VPCs, Subnets, and Security Groups',
+    durationMinutes: 10,
+    level: 'senior',
+    format: 'audio-first',
+    hook: 'Networking is where cloud architecture becomes real.',
+    objective: 'Understand how VPC layout, subnet choice, and security groups affect exposure and operational safety.',
+    summary: 'A practical lesson on why public and private placement matters.',
+    spokenIntro:
+      'If you can explain the difference between a subnet and a security group, you are already past beginner AWS usage. The next step is understanding why those boundaries matter for blast radius.',
+    spokenWrap:
+      'The goal is to make the public surface area as small and intentional as possible.',
+    diagramCue: 'Draw public subnets for entry points and private subnets for data and runtime. Mark allowed traffic arrows.',
+    keyPoints: [
+      'VPCs define the network boundary.',
+      'Subnets and route tables determine traffic flow.',
+      'Security groups should be treated as explicit trust contracts.'
+    ],
+    walkPractice: 'Describe why an ALB might be public while the database stays private.',
+    reflectionPrompt: 'Where is my stack exposed unnecessarily, and what could move behind a boundary?',
+    steps: [
+      {
+        type: 'listen',
+        title: 'Define the boundary',
+        detail: 'State what belongs in the public edge and what should remain private.'
+      },
+      {
+        type: 'diagram',
+        title: 'Mark the traffic',
+        detail: 'Draw allowed ingress and egress instead of only drawing boxes.'
+      },
+      {
+        type: 'practice',
+        title: 'Explain the rule',
+        detail: 'Say why one component can be reached from the internet and another cannot.'
+      }
+    ]
+  },
+  {
+    id: 'cloud-03',
+    trackId: 'cloud-platform',
+    title: 'ECS Fargate, Health Checks, and Reversibility',
+    durationMinutes: 11,
+    level: 'principal',
+    format: 'mixed',
+    hook: 'Deployment safety is architecture too.',
+    objective: 'Understand how ECS service configuration, health checks, and task definitions shape release risk.',
+    summary: 'A lesson on running containerized services with a reversible deployment mindset.',
+    spokenIntro:
+      'A production deployment is only good if you can observe it, roll it back, and understand when it is healthy. ECS gives you a lot of control, but that control has to be used deliberately.',
+    spokenWrap:
+      'Your goal is not just to start the service. Your goal is to make a bad release easy to detect and undo.',
+    diagramCue: 'Draw the deployment path: image build, ECR push, ECS task definition, service, ALB health check.',
+    keyPoints: [
+      'Fargate removes server management but not deployment responsibility.',
+      'Health checks should test the real user path as much as possible.',
+      'Every deployment strategy should have an obvious rollback path.'
+    ],
+    walkPractice: 'Explain how you would know a deployment is safe to keep before traffic ramps up.',
+    reflectionPrompt: 'Which part of this deployment flow would fail loudly enough, and which failure would be silent?',
+    steps: [
+      {
+        type: 'listen',
+        title: 'Understand the release path',
+        detail: 'Trace the image, task, service, and load balancer together.'
+      },
+      {
+        type: 'diagram',
+        title: 'Mark the health check',
+        detail: 'Show where a failing task gets detected and replaced.'
+      },
+      {
+        type: 'practice',
+        title: 'Call the rollback',
+        detail: 'Say what conditions would make you revert immediately.'
+      },
+      {
+        type: 'reflect',
+        title: 'Reduce risk',
+        detail: 'Name one configuration choice that would make releases safer.'
+      }
+    ]
+  },
+  {
+    id: 'cloud-04',
+    trackId: 'cloud-platform',
+    title: 'SSM, Secrets, and Parameter Boundaries',
+    durationMinutes: 9,
+    level: 'senior',
+    format: 'audio-first',
+    hook: 'Secrets management is where convenience and safety collide.',
+    objective: 'Learn how to reason about runtime config, secret injection, and access boundaries in AWS.',
+    summary: 'A practical lesson on keeping credentials and environment settings under control.',
+    spokenIntro:
+      'A good cloud setup does not put secrets in code, in images, or in loose config files. It gives the runtime only the values it needs, when it needs them.',
+    spokenWrap:
+      'If the app can read it, the app should need it. If it does not need it, it should not have it.',
+    diagramCue: 'Draw the path from SSM parameter store to ECS task to application process.',
+    keyPoints: [
+      'SSM Parameter Store is useful for configuration and secret distribution.',
+      'KMS permissions matter as much as parameter names.',
+      'Least privilege should shape both human access and runtime access.'
+    ],
+    walkPractice: 'Explain why the task execution role should have only the narrowest read path it needs.',
+    reflectionPrompt: 'Which secret or config value in a typical stack is most often overexposed?',
+    steps: [
+      {
+        type: 'listen',
+        title: 'Trace the secret path',
+        detail: 'Name where the value lives and who is allowed to read it.'
+      },
+      {
+        type: 'explain',
+        title: 'Separate config from code',
+        detail: 'Say why environment values should not be hard-coded into the app.'
+      },
+      {
+        type: 'practice',
+        title: 'Apply least privilege',
+        detail: 'Practice a one-sentence rule for who can read what.'
+      }
+    ]
   }
 ];

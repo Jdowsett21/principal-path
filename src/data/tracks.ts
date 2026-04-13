@@ -133,5 +133,42 @@ export const tracks: TrackSeed[] = [
         ]
       }
     ]
+  },
+  {
+    id: 'cloud-platform',
+    title: 'Cloud Architecture and AWS',
+    priority: 2,
+    summary: 'Turn AWS familiarity into real architecture judgment around networking, compute, security, and deployment.',
+    color: '#0F3D4C',
+    accent: '#38BDF8',
+    modules: [
+      {
+        id: 'networking-foundations',
+        title: 'Networking and Boundaries',
+        outcomes: [
+          'Reason about VPCs, subnets, route tables, and security groups',
+          'Explain public versus private infrastructure choices',
+          'Understand where NAT, ALB, and CloudFront fit'
+        ]
+      },
+      {
+        id: 'runtime-and-deploy',
+        title: 'Compute, Deployment, and Runtime',
+        outcomes: [
+          'Choose between ECS/Fargate, EC2, and simpler hosting paths',
+          'Understand task definitions, health checks, and deploy safety',
+          'Design release flows that are observable and reversible'
+        ]
+      },
+      {
+        id: 'security-and-storage',
+        title: 'Security, Secrets, and Data Services',
+        outcomes: [
+          'Use IAM and SSM to control access to runtime config',
+          'Reason about S3, CloudFront OAC, and Aurora placement',
+          'Explain how to reduce blast radius in staging and production'
+        ]
+      }
+    ]
   }
 ];
