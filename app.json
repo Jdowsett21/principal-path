@@ -29,17 +29,8 @@
     },
     "plugins": [
       "expo-router",
-      "expo-notifications",
-      "expo-updates",
       "expo-asset"
     ],
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "checkAutomatically": "ON_LOAD",
-      "fallbackToCacheTimeout": 0
-    },
     "experiments": {
       "typedRoutes": true
     }

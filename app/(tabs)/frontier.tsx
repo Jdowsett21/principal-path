@@ -25,22 +25,34 @@ const statusValue: Record<string, number> = {
 
 export default function FrontierScreen() {
   const { frontierBriefs, generateMissionFromFrontierId } = useAppContext();
+  const adoptCount = frontierBriefs.filter((brief) => brief.status === "adopt").length;
+  const experimentCount = frontierBriefs.filter((brief) => brief.status === "experiment").length;
 
   return (
     <Screen>
-      <SectionCard>
+      <SectionCard style={styles.heroCard}>
         <Eyebrow>Frontier</Eyebrow>
-        <Heading>Track what is new without getting lost in hype.</Heading>
+        <Heading>Track what matters without drowning in hype cycles.</Heading>
         <Body>
           This surface keeps you current on AI engineering, tool integration, evals, and production strategy.
         </Body>
+        <View style={styles.metrics}>
+          <View style={styles.metricPill}>
+            <Label>{adoptCount} ready to adopt</Label>
+          </View>
+          <View style={styles.metricPill}>
+            <Label>{experimentCount} worth piloting</Label>
+          </View>
+        </View>
       </SectionCard>
 
       {frontierBriefs.map((brief) => (
-        <SectionCard key={brief.id}>
+        <SectionCard key={brief.id} style={styles.briefCard}>
           <View style={styles.headerRow}>
             <Eyebrow>{brief.category}</Eyebrow>
-            <Label>{statusLabel[brief.status]}</Label>
+            <View style={styles.statusPill}>
+              <Label>{statusLabel[brief.status]}</Label>
+            </View>
           </View>
           <Heading style={styles.title}>{brief.title}</Heading>
           <Body>{brief.summary}</Body>
@@ -62,10 +74,15 @@ export default function FrontierScreen() {
 }
 
 const styles = StyleSheet.create({
+  heroCard: {
+    backgroundColor: "#f7fcfb"
+  },
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    gap: spacing.md
+    gap: spacing.md,
+    alignItems: "center",
+    flexWrap: "wrap"
   },
   title: {
     fontSize: 24,
@@ -73,5 +90,29 @@ const styles = StyleSheet.create({
   },
   stack: {
     gap: spacing.xs
+  },
+  metrics: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: spacing.sm
+  },
+  metricPill: {
+    borderRadius: 999,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    backgroundColor: palette.accentFog,
+    borderWidth: 1,
+    borderColor: palette.border
+  },
+  briefCard: {
+    backgroundColor: palette.surfaceRaised
+  },
+  statusPill: {
+    borderRadius: 999,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    backgroundColor: palette.surface,
+    borderWidth: 1,
+    borderColor: palette.borderStrong
   }
 });

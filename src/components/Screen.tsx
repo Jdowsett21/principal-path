@@ -11,8 +11,12 @@ type ScreenProps = {
 
 export function Screen({ children }: ScreenProps) {
   return (
-    <SafeAreaView edges={["top"]} style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+    <SafeAreaView edges={["top", "bottom"]} style={styles.safeArea}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
         <View style={styles.inner}>{children}</View>
       </ScrollView>
     </SafeAreaView>
@@ -25,11 +29,11 @@ const styles = StyleSheet.create({
     backgroundColor: palette.canvas
   },
   content: {
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.md,
     paddingBottom: spacing.xxl
   },
   inner: {
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.md,
     gap: spacing.md
   }
 });

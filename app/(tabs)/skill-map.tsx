@@ -12,7 +12,7 @@ export default function SkillMapScreen() {
 
   return (
     <Screen>
-      <SectionCard>
+      <SectionCard style={styles.heroCard}>
         <Eyebrow>Skill map</Eyebrow>
         <Heading>Build the kind of depth AI will not replace.</Heading>
         <Body>
@@ -45,6 +45,9 @@ export default function SkillMapScreen() {
 }
 
 const styles = StyleSheet.create({
+  heroCard: {
+    backgroundColor: "#f8fcfb"
+  },
   cardTitle: {
     fontSize: 24,
     lineHeight: 30

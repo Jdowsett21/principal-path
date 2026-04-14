@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 
 import { PillButton } from "@/components/PillButton";
 import { Screen } from "@/components/Screen";
@@ -10,9 +10,13 @@ import { spacing } from "@/theme/spacing";
 export default function SimulationsScreen() {
   const { weeklySimulations } = useAppContext();
 
+  const openSimulation = (title: string, firstTask: string) => {
+    Alert.alert(title, `Start with: ${firstTask}`);
+  };
+
   return (
     <Screen>
-      <SectionCard>
+      <SectionCard style={styles.heroCard}>
         <Eyebrow>Weekly labs</Eyebrow>
         <Heading>Practice the real conversations and decisions.</Heading>
         <Body>
@@ -35,7 +39,11 @@ export default function SimulationsScreen() {
               {simulation.scoringRubric.map((item) => `${item.dimension}: ${item.whatGreatLooksLike}`).join(" • ")}
             </Body>
           </View>
-          <PillButton title="Start simulation" variant="secondary" />
+          <PillButton
+            title="Start simulation"
+            variant="secondary"
+            onPress={() => openSimulation(simulation.title, simulation.tasks[0] ?? "Review the scenario and constraints")}
+          />
         </SectionCard>
       ))}
     </Screen>
@@ -43,6 +51,9 @@ export default function SimulationsScreen() {
 }
 
 const styles = StyleSheet.create({
+  heroCard: {
+    backgroundColor: "#fff9f1"
+  },
   title: {
     fontSize: 23,
     lineHeight: 29

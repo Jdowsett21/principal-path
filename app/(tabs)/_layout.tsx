@@ -8,14 +8,27 @@ export default function TabLayout() {
     <Tabs
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarActiveTintColor: palette.ink,
+        sceneStyle: {
+          backgroundColor: palette.canvas
+        },
+        tabBarActiveTintColor: palette.accentDeep,
         tabBarInactiveTintColor: palette.muted,
         tabBarStyle: {
-          backgroundColor: palette.surface,
+          backgroundColor: "rgba(251, 247, 240, 0.96)",
           borderTopColor: palette.border,
-          height: 88,
-          paddingTop: 10,
-          paddingBottom: 24
+          height: 96,
+          paddingTop: 12,
+          paddingBottom: 26,
+          paddingHorizontal: 14
+        },
+        tabBarItemStyle: {
+          borderRadius: 18,
+          marginHorizontal: 4
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: "700",
+          marginTop: 2
         },
         tabBarIcon: ({ color, size }) => {
           const iconByRoute: Record<string, keyof typeof Ionicons.glyphMap> = {
@@ -27,7 +40,7 @@ export default function TabLayout() {
             progress: "bar-chart-outline"
           };
 
-          return <Ionicons color={color} name={iconByRoute[route.name]} size={size} />;
+          return <Ionicons color={color} name={iconByRoute[route.name]} size={size + 1} />;
         }
       })}
     >

@@ -10,10 +10,13 @@ export type NotificationSettings = {
   permissionStatus: "idle" | "granted" | "denied";
 };
 
+export type LessonRecallStatus = "solid" | "review";
+
 export type PersistedAppState = {
   hasCompletedOnboarding: boolean;
   onboardingAnswers: OnboardingAnswers;
   challengeChoices: Record<string, string>;
+  lessonRecall: Record<string, LessonRecallStatus>;
   skillStates: UserSkillState[];
   recentScores: ChallengeScore[];
   streak: StreakState;

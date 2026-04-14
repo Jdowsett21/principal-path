@@ -18,9 +18,9 @@ export function ProgressBar({ value, color = palette.accent }: ProgressBarProps)
 const styles = StyleSheet.create({
   track: {
     width: "100%",
-    height: 8,
+    height: 10,
     borderRadius: 999,
-    backgroundColor: palette.border,
+    backgroundColor: palette.surfaceMuted,
     overflow: "hidden"
   },
   fill: {

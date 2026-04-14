@@ -16,14 +16,15 @@ export function SectionCard({ children, style }: SectionCardProps) {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: palette.surfaceRaised,
-    borderRadius: 24,
+    borderRadius: 28,
     padding: spacing.lg,
     borderWidth: 1,
     borderColor: palette.border,
-    shadowColor: palette.shadow,
-    shadowOpacity: 1,
-    shadowRadius: 18,
-    shadowOffset: { width: 0, height: 8 },
-    elevation: 4
+    shadowColor: palette.shadowStrong,
+    shadowOpacity: 0.18,
+    shadowRadius: 26,
+    shadowOffset: { width: 0, height: 14 },
+    elevation: 6,
+    gap: spacing.sm
   }
 });

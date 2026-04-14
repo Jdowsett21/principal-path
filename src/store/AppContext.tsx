@@ -7,7 +7,7 @@ import type { Recommendation, SessionSummary, StreakState, UserProfile, UserSkil
 
 import { generateMissionFromFrontier } from "@/lib";
 import { createInitialAppState, OnboardingAnswers, trackToDomainMap, applyChallengeAnswer, appendGeneratedMission } from "./appModel";
-import { loadPersistedAppState, savePersistedAppState } from "./persistence";
+import { LessonRecallStatus, loadPersistedAppState, savePersistedAppState } from "./persistence";
 
 type ChallengeChoiceState = Record<string, string>;
 type NotificationPermissionStatus = "idle" | "granted" | "denied";
@@ -17,6 +17,7 @@ type AppState = {
   onboardingAnswers: OnboardingAnswers;
   onboardingQuestions: OnboardingQuestionSeed[];
   challengeChoices: ChallengeChoiceState;
+  lessonRecall: Record<string, LessonRecallStatus>;
   profile: UserProfile;
   tracks: TrackSeed[];
   lessons: LessonSeed[];
@@ -34,6 +35,7 @@ type AppState = {
   answerOnboardingQuestion: (questionId: string, optionId: string) => void;
   completeOnboarding: () => void;
   answerChallenge: (challengeId: string, choice: string) => void;
+  rateLessonRecall: (lessonId: string, status: LessonRecallStatus) => void;
   enableDailyReminder: () => Promise<void>;
   generateMissionFromFrontierId: (frontierId: string) => void;
   selectedDailyLesson: LessonSeed;
@@ -60,6 +62,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
   const [onboardingAnswers, setOnboardingAnswers] = useState<OnboardingAnswers>({});
   const [challengeChoices, setChallengeChoices] = useState<ChallengeChoiceState>({});
+  const [lessonRecall, setLessonRecall] = useState<Record<string, LessonRecallStatus>>({});
   const [skillStates, setSkillStates] = useState(initialState.skillStates);
   const [recentScores, setRecentScores] = useState(initialState.recentScores);
   const [streak, setStreak] = useState(initialState.streak);
@@ -82,6 +85,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setHasCompletedOnboarding(persisted.hasCompletedOnboarding);
       setOnboardingAnswers(persisted.onboardingAnswers);
       setChallengeChoices(persisted.challengeChoices);
+      setLessonRecall(persisted.lessonRecall ?? {});
       setSkillStates(persisted.skillStates);
       setRecentScores(persisted.recentScores);
       setStreak(persisted.streak);
@@ -105,6 +109,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       hasCompletedOnboarding,
       onboardingAnswers,
       challengeChoices,
+      lessonRecall,
       skillStates,
       recentScores,
       streak,
@@ -122,6 +127,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     hasCompletedOnboarding,
     onboardingAnswers,
     challengeChoices,
+    lessonRecall,
     skillStates,
     recentScores,
     streak,
@@ -153,6 +159,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     onboardingAnswers,
     onboardingQuestions: initialState.onboardingQuestions,
     challengeChoices,
+    lessonRecall,
     profile: initialState.profile,
     tracks: initialState.tracks,
     lessons: initialState.lessons,
@@ -196,6 +203,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setStreak(updated.streak);
         setRecommendations(updated.recommendations);
         setSessionSummary(updated.sessionSummary);
+      });
+    },
+    rateLessonRecall: (lessonId, status) => {
+      startTransition(() => {
+        setLessonRecall((current) => ({ ...current, [lessonId]: status }));
       });
     },
     enableDailyReminder: async () => {

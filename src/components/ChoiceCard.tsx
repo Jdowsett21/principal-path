@@ -34,16 +34,17 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     borderWidth: 1,
     borderColor: palette.border,
-    borderRadius: 20,
+    borderRadius: 24,
     padding: spacing.md,
     backgroundColor: palette.surface
   },
   selected: {
     borderColor: palette.accent,
-    backgroundColor: "#eef8f7"
+    backgroundColor: palette.accentFog
   },
   pressed: {
-    opacity: 0.9
+    opacity: 0.95,
+    transform: [{ translateY: 1 }]
   },
   dotOuter: {
     width: 22,

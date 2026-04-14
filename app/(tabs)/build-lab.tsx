@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 
 import { PillButton } from "@/components/PillButton";
 import { Screen } from "@/components/Screen";
@@ -12,18 +12,30 @@ export default function BuildLabScreen() {
   const generatedMissions = buildMissions.filter((mission) => mission.origin === "generated");
   const seedMissions = buildMissions.filter((mission) => mission.origin !== "generated");
 
+  const openMission = (title: string, durationMinutes: number, firstStep: string) => {
+    Alert.alert(title, `${durationMinutes} minute mission\n\nStart with: ${firstStep}`);
+  };
+
   return (
     <Screen>
-      <SectionCard>
+      <SectionCard style={styles.heroCard}>
         <Eyebrow>Build lab</Eyebrow>
         <Heading>Turn new tech into a small finished thing.</Heading>
         <Body>
           These missions are designed for fast reward loops: one focused problem, visible output, and a clear finish line.
         </Body>
+        <View style={styles.badgeRow}>
+          <View style={styles.badge}>
+            <Label>{seedMissions.length} core missions</Label>
+          </View>
+          <View style={styles.badge}>
+            <Label>{generatedMissions.length} generated from frontier</Label>
+          </View>
+        </View>
       </SectionCard>
 
       {latestGeneratedMission ? (
-        <SectionCard>
+        <SectionCard style={styles.generatedCard}>
           <Eyebrow>Latest generated mission</Eyebrow>
           <Heading style={styles.title}>{latestGeneratedMission.title}</Heading>
           <Body>{latestGeneratedMission.outcome}</Body>
@@ -56,7 +68,11 @@ export default function BuildLabScreen() {
           <Body>{mission.reward}</Body>
           <Label>Success signals</Label>
           <Body>{mission.successSignals.join(" • ")}</Body>
-          <PillButton title={`${mission.durationMinutes}-minute mission`} variant="secondary" />
+          <PillButton
+            title={`${mission.durationMinutes}-minute mission`}
+            variant="secondary"
+            onPress={() => openMission(mission.title, mission.durationMinutes, mission.steps[0]?.title ?? "Review the brief")}
+          />
         </SectionCard>
       ))}
     </Screen>
@@ -64,6 +80,9 @@ export default function BuildLabScreen() {
 }
 
 const styles = StyleSheet.create({
+  heroCard: {
+    backgroundColor: "#fff9f1"
+  },
   title: {
     fontSize: 24,
     lineHeight: 30
@@ -73,5 +92,19 @@ const styles = StyleSheet.create({
   },
   step: {
     gap: spacing.xs
+  },
+  badgeRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: spacing.sm
+  },
+  badge: {
+    borderRadius: 999,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    backgroundColor: "#ffffffcc"
+  },
+  generatedCard: {
+    backgroundColor: "#f8fcfb"
   }
 });

@@ -24,17 +24,17 @@ export function MetricTile({ label, value, helper }: MetricTileProps) {
 const styles = StyleSheet.create({
   tile: {
     flex: 1,
-    minWidth: 140,
+    minWidth: 146,
     backgroundColor: palette.surface,
-    borderRadius: 20,
+    borderRadius: 24,
     padding: spacing.md,
     borderWidth: 1,
     borderColor: palette.border,
     gap: spacing.xs
   },
   value: {
-    fontSize: 24,
-    lineHeight: 28
+    fontSize: 26,
+    lineHeight: 31
   },
   helper: {
     color: palette.muted

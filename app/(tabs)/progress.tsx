@@ -25,7 +25,7 @@ export default function ProgressScreen() {
 
   return (
     <Screen>
-      <SectionCard>
+      <SectionCard style={styles.heroCard}>
         <Eyebrow>Progress</Eyebrow>
         <Heading>Make growth visible enough to trust.</Heading>
         <View style={styles.metricRow}>
@@ -90,6 +90,9 @@ export default function ProgressScreen() {
 }
 
 const styles = StyleSheet.create({
+  heroCard: {
+    backgroundColor: "#f7fcfb"
+  },
   metricRow: {
     flexDirection: "row",
     flexWrap: "wrap",
