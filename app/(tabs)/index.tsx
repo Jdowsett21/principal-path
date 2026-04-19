@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import * as Speech from "expo-speech";
+import { router } from "expo-router";
 
 import { ChoiceCard } from "@/components/ChoiceCard";
 import { PillButton } from "@/components/PillButton";
@@ -32,6 +32,7 @@ export default function TodayScreen() {
     dailyChallenges,
     frontierBriefs,
     generateMissionFromFrontierId,
+    hasCompletedSkillIntake,
     lessonRecall,
     lessons,
     profile,
@@ -43,7 +44,6 @@ export default function TodayScreen() {
     weakSkill
   } = useAppContext();
 
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const [sessionStarted, setSessionStarted] = useState(false);
 
   const featuredChallenge = dailyChallenges[0]!;
@@ -68,35 +68,13 @@ export default function TodayScreen() {
 
   const recallCoverage = recallLessons.filter((lesson) => lessonRecall[lesson.id]).length;
 
-  const lessonScript = useMemo(() => {
-    const parts = [
-      selectedDailyLesson.spokenIntro,
-      `Objective: ${selectedDailyLesson.objective}`,
-      ...selectedDailyLesson.keyPoints.map((point) => `Key point: ${point}`),
-      `Diagram cue: ${selectedDailyLesson.diagramCue}`,
-      `Walk practice: ${selectedDailyLesson.walkPractice}`,
-      selectedDailyLesson.spokenWrap
-    ];
-
-    return parts.join(" ");
-  }, [selectedDailyLesson]);
-
   const startGuidedSession = () => {
     setSessionStarted(true);
-    Speech.stop();
-    setIsSpeaking(true);
-    Speech.speak(lessonScript, {
-      rate: 0.96,
-      pitch: 1,
-      onDone: () => setIsSpeaking(false),
-      onStopped: () => setIsSpeaking(false),
-      onError: () => setIsSpeaking(false)
-    });
+    router.push("/player" as never);
   };
 
-  const stopLesson = () => {
-    Speech.stop();
-    setIsSpeaking(false);
+  const openSkillIntake = () => {
+    router.push("/intake" as never);
   };
 
   const createMissionFromFrontier = () => {
@@ -164,7 +142,15 @@ export default function TodayScreen() {
           </View>
         </View>
 
-        <PillButton title={isSpeaking ? "Playing guided walk..." : "Start today's guided walk"} onPress={startGuidedSession} />
+        <PillButton title="Open Curriculum" onPress={() => router.push("/curriculum" as never)} />
+        <PillButton title="Start today's guided walk" onPress={startGuidedSession} variant="secondary" />
+        {!hasCompletedSkillIntake ? (
+          <PillButton
+            title="Take the skill intake (shapes your lessons)"
+            variant="secondary"
+            onPress={openSkillIntake}
+          />
+        ) : null}
       </LinearGradient>
 
       <SectionCard style={styles.stageCard}>
@@ -252,8 +238,10 @@ export default function TodayScreen() {
         </View>
 
         <View style={styles.inlineActions}>
-          <PillButton title={isSpeaking ? "Replay lesson" : "Play audio"} onPress={startGuidedSession} />
-          <PillButton title="Stop audio" variant="secondary" onPress={stopLesson} />
+          <PillButton title="Open guided player" onPress={startGuidedSession} />
+          {hasCompletedSkillIntake ? (
+            <PillButton title="Retake skill intake" variant="secondary" onPress={openSkillIntake} />
+          ) : null}
         </View>
       </SectionCard>
 

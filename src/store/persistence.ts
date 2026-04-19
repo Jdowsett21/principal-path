@@ -12,6 +12,9 @@ export type NotificationSettings = {
 
 export type LessonRecallStatus = "solid" | "review";
 
+export type TopicRatingLevel = "none" | "heard" | "know" | "deep";
+export type TopicRatings = Record<string, TopicRatingLevel>;
+
 export type PersistedAppState = {
   hasCompletedOnboarding: boolean;
   onboardingAnswers: OnboardingAnswers;
@@ -24,6 +27,8 @@ export type PersistedAppState = {
   sessionSummary: SessionSummary;
   buildMissions: BuildMissionSeed[];
   notificationSettings: NotificationSettings;
+  topicRatings?: TopicRatings;
+  hasCompletedSkillIntake?: boolean;
 };
 
 const STORAGE_KEY = "career-builder.app-state.v1";

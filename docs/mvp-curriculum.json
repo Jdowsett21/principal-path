@@ -11,17 +11,17 @@
           "id": "system-boundaries",
           "title": "Service Boundaries and Modularity",
           "outcomes": [
-            "Choose reasonable service boundaries",
-            "Explain monolith vs microservices trade-offs",
-            "Identify coupling risks early"
+            "Choose boundaries around ownership and change rate",
+            "Explain monolith, modular monolith, and microservice trade-offs",
+            "Spot coupling that will slow delivery later"
           ]
         },
         {
           "id": "design-tradeoffs",
           "title": "Design Trade-Offs",
           "outcomes": [
-            "Compare throughput, latency, cost, and complexity",
-            "Defend a design under business constraints"
+            "Compare throughput, latency, cost, reliability, and complexity",
+            "Defend a design against business, operational, and staffing constraints"
           ]
         }
       ]
@@ -35,17 +35,17 @@
           "id": "postgres-core",
           "title": "Postgres Fundamentals",
           "outcomes": [
-            "Understand indexes and query plans",
-            "Reason about transactions and isolation",
-            "Spot common schema mistakes"
+            "Read indexes and query plans against real query shapes",
+            "Reason about transactions, isolation, and locking",
+            "Spot schema mistakes that become production bottlenecks"
           ]
         },
         {
           "id": "data-scale",
           "title": "Scaling Data Access",
           "outcomes": [
-            "Choose between caching, replicas, and partitioning",
-            "Understand consistency implications"
+            "Choose between caching, replicas, partitioning, and sharding",
+            "Understand freshness and consistency implications"
           ]
         }
       ]
@@ -59,17 +59,17 @@
           "id": "observability",
           "title": "Observability",
           "outcomes": [
-            "Use logs, metrics, and traces correctly",
-            "Define useful service health indicators"
+            "Use logs, metrics, and traces for diagnosis, not noise",
+            "Define service health indicators that map to user impact"
           ]
         },
         {
           "id": "incident-response",
           "title": "Incident Response",
           "outcomes": [
-            "Triage incidents calmly",
-            "Reduce blast radius",
-            "Write useful postmortems"
+            "Triage incidents without thrashing",
+            "Reduce blast radius and restore service quickly",
+            "Write postmortems that drive real follow-up"
           ]
         }
       ]
@@ -83,8 +83,8 @@
           "id": "failure-modes",
           "title": "Failure Modes",
           "outcomes": [
-            "Understand retries, timeouts, and idempotency",
-            "Recognize network assumptions that break systems"
+            "Understand retries, timeouts, idempotency, and partial failure",
+            "Recognize assumptions that break under latency or partition"
           ]
         },
         {
@@ -92,7 +92,7 @@
           "title": "Consistency and Coordination",
           "outcomes": [
             "Explain CAP-style trade-offs in practical terms",
-            "Choose acceptable consistency for a product need"
+            "Choose acceptable consistency for a specific product need"
           ]
         }
       ]
@@ -106,7 +106,7 @@
           "id": "stakeholder-tradeoffs",
           "title": "Stakeholder Trade-Offs",
           "outcomes": [
-            "Communicate risk clearly",
+            "Communicate technical risk clearly",
             "Push back without sounding obstructive"
           ]
         },
@@ -115,7 +115,7 @@
           "title": "Reviewing AI-Generated Code",
           "outcomes": [
             "Inspect correctness beyond surface plausibility",
-            "Catch hidden operational and maintenance risk"
+            "Catch hidden operational, security, and maintenance risk"
           ]
         }
       ]
@@ -125,29 +125,29 @@
     {
       "id": "quiz",
       "title": "Quick Quiz",
-      "description": "Fast recall and concept checks for walking sessions."
+      "description": "Fast checks for core concepts and terminology."
     },
     {
       "id": "tradeoff",
       "title": "Trade-Off Challenge",
-      "description": "Pick an approach, explain why, then review consequences."
+      "description": "Choose an approach, defend it, then examine the consequences."
     },
     {
       "id": "incident",
       "title": "Incident Drill",
-      "description": "Respond to an outage, latency spike, or data issue."
+      "description": "Respond to an outage, latency spike, or data integrity issue."
     },
     {
       "id": "system_design",
       "title": "System Design Rep",
-      "description": "Design a system, then adapt as constraints change."
+      "description": "Design a system and adapt it as constraints change."
     }
   ],
   "starterWeek": [
     {
       "day": 1,
       "focus": "Architecture",
-      "lesson": "Monolith vs microservices",
+      "lesson": "Service boundaries and modularity",
       "challenge": "Choose an architecture for a small but fast-growing product"
     },
     {
@@ -159,7 +159,7 @@
     {
       "day": 3,
       "focus": "Reliability",
-      "lesson": "Logs, metrics, traces",
+      "lesson": "Logs, metrics, and traces",
       "challenge": "Diagnose a latency regression after deploy"
     },
     {

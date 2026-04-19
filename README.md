@@ -65,6 +65,13 @@ To run it locally, install a current Node.js toolchain first, then:
 2. `npm run start`
 3. open the Expo QR code on your phone or run the iOS / Android target
 
+If your phone is off Wi-Fi or cannot reach the Metro server on your LAN, use:
+
+1. `npm run start:tunnel`
+2. open the app through the tunnel URL or Expo Go / dev client
+
+The tunnel mode is slower than local LAN, but it works when the device cannot reach your computer directly.
+
 The current environment where this repo was created did not have `node`, `npm`, or `npx` on the PATH, so the app structure was built but not executed here.
 
 ## Notes From Initial Role Analysis

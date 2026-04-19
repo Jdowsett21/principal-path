@@ -11,6 +11,7 @@ export const lessons: LessonSeed[] = [
     hook: 'Most architecture mistakes are really boundary mistakes.',
     objective: 'Learn how to place boundaries around change, ownership, and coupling without overengineering.',
     summary: 'A walk lesson on choosing the smallest boundary that meaningfully reduces coordination cost.',
+    topicKey: 'architecture.boundaries',
     spokenIntro:
       'Today we are training one judgment call: where a boundary should live. Do not think about elegance first. Think about change cost, team ownership, and the smallest move that makes the system easier to evolve.',
     spokenWrap:
@@ -23,6 +24,66 @@ export const lessons: LessonSeed[] = [
     ],
     walkPractice: 'Explain out loud what signal would tell you that the current module boundaries are too expensive.',
     reflectionPrompt: 'What friction am I actually trying to remove: deployment, coordination, or cognitive load?',
+    variants: [
+      {
+        id: 'foundation',
+        label: 'Foundation',
+        description: 'Starts from what a boundary even means, with plain-language examples.',
+        spokenIntro:
+          "Okay, so today we're going to talk about boundaries in code, and if you've never really thought about this before, that's totally fine — we'll start from the ground up. The short version is that a boundary is just a line you draw around some chunk of your system, where the stuff on one side doesn't really need to know how the stuff on the other side works. That's the whole idea.",
+        spokenBody:
+          "The easiest way to picture this is a restaurant. You've got a kitchen on one side, a dining room on the other, and a waiter going between them. The kitchen doesn't care what the dining room looks like. The dining room doesn't care which burner is broken. The only thing they have to agree on is the waiter. Code works the same way. Maybe you've got one chunk that handles payments, and another chunk that handles inventory, and they agree on some small, stable thing between them — like a function call or an API. That's their waiter." +
+          " So why do we even care about this? Because when two parts of your code know too much about each other, changing one of them forces you to change the other. That's what people mean by coupling. It's the reason that a change which should take an hour somehow turns into a week of work. Good boundaries are the thing that lets you mess around inside the kitchen without having to go tell the dining room about it." +
+          " The tricky part, honestly, is figuring out where the line should go. You don't want lines everywhere, because every boundary has a cost — more code to maintain, more things to keep in sync. What you actually want is a line in the spots where the two sides are changing for genuinely different reasons. Maybe different teams own them. Maybe they move at different speeds. Maybe they exist for totally different purposes. Here's the rule of thumb: if two things always change together, they probably belong on the same side of the line. If they keep changing for different reasons, that's your signal that there should be a line between them.",
+        spokenWrap:
+          "So the thing I'd love for you to walk away with is this. A boundary is basically a line that lets two parts of your system ignore each other most of the time. You draw one when the two sides change for different reasons — not because it looks cleaner on a diagram. And honestly, the next time you hear people arguing about microservices versus modules versus clean architecture, that's really all they're arguing about. Where should the lines go, and why.",
+        keyPoints: [
+          "A boundary is just a line around part of your system so it can ignore what's on the other side.",
+          "The whole point is reducing coupling — the tax you pay when changing one thing forces changes everywhere else.",
+          "Draw a boundary when the two sides change for different reasons, not because it'd look tidier."
+        ]
+      },
+      {
+        id: 'consolidation',
+        label: 'Consolidation',
+        description: 'Assumes you know what a boundary is. Focuses on when and where to place them.',
+        spokenIntro:
+          "Okay, so you already know what a boundary is — we're not going to re-explain that. What we're actually sharpening today is the judgment call: where should the next one go, and when do you know the current one was a mistake? And it's not about elegance. It's about coordination cost.",
+        spokenBody:
+          "Here's the thing most people miss: boundaries have a price tag. Every time you split something, you're signing up for new overhead — versioning, deploys, cross-boundary debugging, shared types, the whole deal. If that overhead costs more than the friction you're removing, the boundary is actually net negative. So the real question you want to be asking is: what friction am I buying down, and is that friction genuinely expensive right now? Not in theory. Right now." +
+          " Three signals a boundary is overdue. One — two teams keep stepping on the same files, and code reviews are starting to feel like negotiations. Two — a small change keeps triggering a ripple of other changes, because shared state or shared tables are reaching into everything. Three — two parts of the system are evolving at wildly different speeds, and the slow side is dragging down the fast side. If you see any of those, a boundary probably pays for itself." +
+          " And three signals it was premature. One — the split was drawn on technology lines, not domain lines. You split because it was a different language, not because it was a different responsibility. Two — you have to coordinate across the boundary on almost every change. That means the line is cutting against the grain instead of with it. Three — the boundary is stable, but the thing on one side of it basically never changes on its own. That's a fossil. It's a line on a diagram doing no actual work." +
+          " If you take one heuristic from this, take this one: boundaries follow ownership and change rate — not technology, not aesthetics. If you can't name the team that owns each side, or point to the reason each side changes at its own speed, you don't actually have a boundary. You just have scaffolding.",
+        spokenWrap:
+          "Leaving you with this thought. Good boundaries are almost invisible when they're right — they just quietly take friction out of the system. Bad boundaries constantly announce themselves through coordination pain. And if you're doing this really well, honestly, nobody thanks you, and nobody notices. That's kind of the job.",
+        keyPoints: [
+          "Every boundary costs something — it's only worth it if it buys down worse friction elsewhere.",
+          "Real signals to add one: teams colliding, ripple-effect changes, mismatched change rates.",
+          "Real signals it was premature: tech-driven splits, constant cross-boundary coordination, fossil boundaries that never move."
+        ]
+      },
+      {
+        id: 'advanced',
+        label: 'Advanced',
+        description: 'Skips the fundamentals. Focuses on principal-level tradeoffs and anti-patterns.',
+        spokenIntro:
+          'Assuming fluency. Today is about the second-order tradeoffs, the ones that show up after you have drawn a few boundaries in production and watched how they age.',
+        spokenBody:
+          'Boundaries rot. That is the insight most teams miss. A boundary that made sense eighteen months ago, given the team shape and the domain understanding at the time, may be actively wrong now. Yet the boundary persists, because the cost of moving it is visible and the cost of keeping it is hidden. This is how you get the fossilized microservice graph: nobody designed it, it is just what remained after the original reasons evaporated.' +
+          ' The principal-level move is treating boundaries as provisional, and building the org muscle to rewrite them. That means investing in tooling that makes cross-boundary refactors cheap: monorepo discipline, strong typed contracts, consolidated observability. If moving a boundary requires a six-week coordination project, your architecture is frozen, regardless of how clever the initial split was.' +
+          ' Second, watch for boundaries that are structurally correct but culturally wrong. The split matches the domain perfectly, but the team that owns one side has no political capital to push back on the team that owns the other. The contract degrades. The stronger team leaks requirements across. The boundary becomes a one-way door. A boundary without balanced ownership is not a boundary, it is a queue.' +
+          ' Third, the Conway inversion. Most orgs accept that systems mirror communication structure. The principal move is the reverse: deliberately set boundaries you want the org to grow into. You are not just drawing lines around what exists, you are setting the shape of the team you need in twelve months. This is rare and it is how senior architects actually shape organizations.' +
+          ' Final anti-pattern: the clean architecture tax. Onion layers, hexagonal patterns, ports-and-adapters applied uniformly regardless of change profile. Some modules earn that ceremony. Most do not. A small, stable module with three callers does not need five layers of indirection. That is not discipline, it is cargo culting, and it makes the whole codebase slower to learn and slower to change.',
+        spokenWrap:
+          'To land it: boundaries are living decisions. Draw them provisionally, invest in the ability to redraw them, watch their political weight as carefully as their technical shape, and refuse to apply uniform ceremony. The principal judgment is knowing which boundaries earn which costs.',
+        keyPoints: [
+          'Boundaries rot, and the cost of keeping them is invisible. Build the muscle to redraw.',
+          'A boundary without balanced ownership degrades into a queue, regardless of how clean the split is.',
+          'Use boundaries to shape the org you need, not just mirror the one you have.',
+          'Uniform architectural ceremony is cargo-culting; match investment to actual change profile.'
+        ]
+      }
+    ],
     steps: [
       {
         type: 'listen',

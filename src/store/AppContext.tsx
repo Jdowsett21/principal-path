@@ -2,12 +2,12 @@ import { createContext, ReactNode, startTransition, useContext, useEffect, useMe
 
 import * as Notifications from "expo-notifications";
 
-import type { BuildMissionSeed, DailyChallengeSeed, FrontierBriefSeed, LessonSeed, OnboardingQuestionSeed, TrackSeed, WeeklySimulationSeed } from "@/data";
+import type { BuildMissionSeed, DailyChallengeSeed, FrontierBriefSeed, LessonSeed, LessonVariantId, OnboardingQuestionSeed, TrackSeed, WeeklySimulationSeed } from "@/data";
 import type { Recommendation, SessionSummary, StreakState, UserProfile, UserSkillState } from "@/types";
 
 import { generateMissionFromFrontier } from "@/lib";
 import { createInitialAppState, OnboardingAnswers, trackToDomainMap, applyChallengeAnswer, appendGeneratedMission } from "./appModel";
-import { LessonRecallStatus, loadPersistedAppState, savePersistedAppState } from "./persistence";
+import { LessonRecallStatus, loadPersistedAppState, savePersistedAppState, TopicRatingLevel, TopicRatings } from "./persistence";
 
 type ChallengeChoiceState = Record<string, string>;
 type NotificationPermissionStatus = "idle" | "granted" | "denied";
@@ -43,6 +43,10 @@ type AppState = {
   strongestSkill: UserSkillState | undefined;
   completionPercent: number;
   getTrackMastery: (trackId: string) => number;
+  topicRatings: TopicRatings;
+  hasCompletedSkillIntake: boolean;
+  saveTopicRatings: (ratings: TopicRatings) => void;
+  getLessonVariantId: (lesson: LessonSeed) => LessonVariantId;
 };
 
 const initialState = createInitialAppState();
@@ -71,6 +75,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [buildMissions, setBuildMissions] = useState(initialState.buildMissions);
   const [notificationPermissionStatus, setNotificationPermissionStatus] = useState<NotificationPermissionStatus>("idle");
   const [reminderTime, setReminderTime] = useState(initialState.profile.preferences.dailyReminderTime ?? "07:30");
+  const [topicRatings, setTopicRatings] = useState<TopicRatings>({});
+  const [hasCompletedSkillIntake, setHasCompletedSkillIntake] = useState(false);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -94,6 +100,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setBuildMissions(persisted.buildMissions);
       setNotificationPermissionStatus(persisted.notificationSettings.permissionStatus);
       setReminderTime(persisted.notificationSettings.time);
+      setTopicRatings(persisted.topicRatings ?? {});
+      setHasCompletedSkillIntake(persisted.hasCompletedSkillIntake ?? false);
       setHydrated(true);
     });
 
@@ -120,7 +128,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
         enabled: notificationPermissionStatus === "granted",
         time: reminderTime,
         permissionStatus: notificationPermissionStatus
-      }
+      },
+      topicRatings,
+      hasCompletedSkillIntake
     });
   }, [
     hydrated,
@@ -135,7 +145,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     sessionSummary,
     buildMissions,
     notificationPermissionStatus,
-    reminderTime
+    reminderTime,
+    topicRatings,
+    hasCompletedSkillIntake
   ]);
 
   const weakSkill = useMemo(
@@ -242,6 +254,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const domain = trackToDomainMap[trackId];
       const skill = skillStates.find((item) => item.domain === domain);
       return skill?.mastery ?? 0;
+    },
+    topicRatings,
+    hasCompletedSkillIntake,
+    saveTopicRatings: (ratings) => {
+      startTransition(() => {
+        setTopicRatings(ratings);
+        setHasCompletedSkillIntake(true);
+      });
+    },
+    getLessonVariantId: (lesson) => {
+      if (!lesson.variants || lesson.variants.length === 0) return "consolidation";
+      const rating: TopicRatingLevel | undefined = lesson.topicKey ? topicRatings[lesson.topicKey] : undefined;
+      if (rating === "none" || rating === "heard") return "foundation";
+      if (rating === "deep") return "advanced";
+      return "consolidation";
     }
   };
 
